@@ -10,9 +10,52 @@ $(document).ready(function() {
  */
 function initializePage() {
 	$("#testjs").click(function(e) {
-		$('.jumbotron h1').text("Javascript is connected");
+		$('.jumbotron h1').text("Javascript has taken control.");
+    $('#testjs').text("Please wait...");
+    $(".jumbotron p").toggleClass("active");
 	});
 
 	// Add any additional listeners here
 	// example: $("#div-id").click(functionToCall);
+  $("a.thumbnail").click(projectClick);
+
+  $("#submitBtn").click(btnClick)
 }
+
+
+function projectClick(e) {
+  console.log("Project clicked");
+  // Cancel the default action, which prevents the page from reloading
+    e.preventDefault();
+
+  // In an event listener, $(this) is 
+  // the element that fired the event
+  var projectTitle = $(this).find("p").text();
+
+  //"#" refers to id, "." refers to class 
+  var jumbotronHeader = $(".jumbotron h1");
+  jumbotronHeader.text(projectTitle);
+
+  var containingProject = $(this).closest(".project")
+  var description = $(containingProject).find(".project-description");
+
+  if(description.length == 0){
+    containingProject.append("<div class='project-description'><p>Description of the project.</p></div>");
+  }
+  else{
+    description.fadeToggle()
+  }
+}
+
+function btnClick(e) {
+  //debug message
+  console.log("Submit Button clicked.")
+
+  var projectToChange = $('#project').val();
+
+  $(projectToChange).animate({width: $('#width').val()});
+
+  var textToChange = $('#description').val();
+  $(projectToChange + " .project-description").text(textToChange);
+}
+
